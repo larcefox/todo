@@ -241,8 +241,10 @@ todormfunc () {
             echo
             case $RMANSWER in
                 y*|Y*)
-                    rm -rf "$TODO_DIR"/"$LIST"
-                    echo -e "All items in $LIST have been removed!"
+                    mkdir -p "$TODO_DIR"/removed/
+                    # rm -rf "$TODO_DIR"/"$LIST"
+                    mv $TODO_DIR"/"$LIST"/ "$TODO_DIR"/removed/
+                    echo -e "All items in $LIST moved to removed!"
                     ;;
                 *)
                     echo -e "Items in $LIST were not removed."
@@ -259,9 +261,12 @@ todormfunc () {
             if [ -f "$TODO_DIR"/"$LIST"/"$TODO_ITEM" ]; then
                 echo -e "Item $TODO_ITEM removed from $LIST!"
                 cat "$TODO_DIR"/"$LIST"/"$TODO_ITEM"
-                rm "$TODO_DIR"/"$LIST"/"$TODO_ITEM"
+                mkdir -p "$TODO_DIR"/removed/"$LIST"
+                # rm "$TODO_DIR"/"$LIST"/"$TODO_ITEM" 
+                mv "$TODO_DIR"/"$LIST"/"$TODO_ITEM" "$TODO_DIR"/removed/"$LIST"
                 if [ "$(dir "$TODO_DIR"/"$LIST" | wc -w)" = "0" ]; then
-                    rm -r "$TODO_DIR"/"$LIST"
+                    # rm -r "$TODO_DIR"/"$LIST"
+                    mv $TODO_DIR"/"$LIST"/ "$TODO_DIR"/removed/
                 else
                     for file in $(dir -C -w 1 "$TODO_DIR"/"$LIST" | sort -n); do
                         if [ "$file" -gt "$TODO_ITEM" ]; then
@@ -328,7 +333,8 @@ todomvitemlistfunc () {
     mv "$TODO_DIR"/"$LIST"/"$TODO_ITEM_1" "$TODO_DIR"/"$LIST_2"/"$FILE_NAME"
     echo "Item $TODO_ITEM_1 has been moved from $LIST to $LIST_2!"
     if [ "$(dir "$TODO_DIR"/"$LIST" | wc -w)" = "0" ]; then
-        rm -r "$TODO_DIR"/"$LIST"
+        # rm -r "$TODO_DIR"/"$LIST"
+        mv $TODO_DIR"/"$LIST"/ "$TODO_DIR"/removed/
     else
         for file in $(dir -C -w 1 "$TODO_DIR"/"$LIST" | sort -n); do
             if [ "$file" -gt "$TODO_ITEM_1" ]; then
@@ -349,7 +355,8 @@ todomvlistlistfunc () {
         mv "$TODO_DIR"/"$LIST"/"$item" "$TODO_DIR"/"$LIST_2"/"$FILE_NAME"
     done
     echo "All items in $LIST moved to $LIST_2!"
-    rm -r "$TODO_DIR"/"$LIST"
+    # rm -r "$TODO_DIR"/"$LIST"
+    mv $TODO_DIR"/"$LIST"/ "$TODO_DIR"/removed/
 }
 
 todomvfunc () {
