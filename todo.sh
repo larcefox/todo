@@ -439,6 +439,11 @@ todolistfunc () {
 if [ -z "$TODO_DIR" ]; then
     TODO_DIR="$HOME/.todo"
 fi
+
+if [ -z "$REMOTE" ]; then
+    REMOTE="larce@192.168.31.188:~/"
+fi
+
 if [ ! -d "$TODO_DIR" ]; then
     mkdir "$TODO_DIR"
 fi
@@ -465,32 +470,32 @@ fi
 case $1 in
     add)
         todoaddfunc "$@"
-        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" "$REMOTE" --delete
         exit 0
         ;;
     edit)
         todoeditfunc "$@"
-        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" "$REMOTE" --delete
         exit 0
         ;;
     done)
         tododonefunc "$@"
-        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" "$REMOTE" --delete
         exit 0
         ;;
     undo)
         todoundofunc "$@"
-        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" "$REMOTE" --delete
         exit 0
         ;;
     mv)
         todomvfunc "$@"
-        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" "$REMOTE" --delete
         exit 0
         ;;
     rm)
         todormfunc "$@"
-        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" "$REMOTE" --delete
         exit 0
         ;;
     help|--help)
