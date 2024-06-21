@@ -465,26 +465,32 @@ fi
 case $1 in
     add)
         todoaddfunc "$@"
+        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     edit)
         todoeditfunc "$@"
+        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     done)
         tododonefunc "$@"
+        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     undo)
         todoundofunc "$@"
+        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     mv)
         todomvfunc "$@"
+        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     rm)
         todormfunc "$@"
+        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     help|--help)
