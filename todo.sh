@@ -243,7 +243,7 @@ todormfunc () {
                 y*|Y*)
                     mkdir -p "$TODO_DIR"/removed/
                     # rm -rf "$TODO_DIR"/"$LIST"
-                    mv $TODO_DIR"/"$LIST"/ "$TODO_DIR"/removed/
+                    mv "$TODO_DIR"/"$LIST"/"$TODO_DIR"/removed/
                     echo -e "All items in $LIST moved to removed!"
                     ;;
                 *)
@@ -266,7 +266,7 @@ todormfunc () {
                 mv "$TODO_DIR"/"$LIST"/"$TODO_ITEM" "$TODO_DIR"/removed/"$LIST"
                 if [ "$(dir "$TODO_DIR"/"$LIST" | wc -w)" = "0" ]; then
                     # rm -r "$TODO_DIR"/"$LIST"
-                    mv $TODO_DIR"/"$LIST"/ "$TODO_DIR"/removed/
+                    mv "$TODO_DIR"/"$LIST"/"$TODO_DIR"/removed/
                 else
                     for file in $(dir -C -w 1 "$TODO_DIR"/"$LIST" | sort -n); do
                         if [ "$file" -gt "$TODO_ITEM" ]; then
@@ -334,7 +334,7 @@ todomvitemlistfunc () {
     echo "Item $TODO_ITEM_1 has been moved from $LIST to $LIST_2!"
     if [ "$(dir "$TODO_DIR"/"$LIST" | wc -w)" = "0" ]; then
         # rm -r "$TODO_DIR"/"$LIST"
-        mv $TODO_DIR"/"$LIST"/ "$TODO_DIR"/removed/
+        mv "$TODO_DIR"/"$LIST"/"$TODO_DIR"/removed/
     else
         for file in $(dir -C -w 1 "$TODO_DIR"/"$LIST" | sort -n); do
             if [ "$file" -gt "$TODO_ITEM_1" ]; then
@@ -356,7 +356,7 @@ todomvlistlistfunc () {
     done
     echo "All items in $LIST moved to $LIST_2!"
     # rm -r "$TODO_DIR"/"$LIST"
-    mv $TODO_DIR"/"$LIST"/ "$TODO_DIR"/removed/
+    mv "$TODO_DIR"/"$LIST"/"$TODO_DIR"/removed/
 }
 
 todomvfunc () {
@@ -465,32 +465,32 @@ fi
 case $1 in
     add)
         todoaddfunc "$@"
-        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     edit)
         todoeditfunc "$@"
-        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     done)
         tododonefunc "$@"
-        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     undo)
         todoundofunc "$@"
-        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     mv)
         todomvfunc "$@"
-        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     rm)
         todormfunc "$@"
-        rsync -avh -e ssh .todo_dir larce@192.168.31.188:~/ --delete
+        rsync -avh -e ssh "$TODO_DIR" larce@192.168.31.188:~/ --delete
         exit 0
         ;;
     help|--help)
